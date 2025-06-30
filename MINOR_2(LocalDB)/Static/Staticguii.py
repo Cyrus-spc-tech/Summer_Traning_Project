@@ -97,9 +97,9 @@ elif choice == "Update User":
                 name = st.text_input("Name", value=user_data['Name'].iloc[0])
                 email = st.text_input("Email", value=user_data['Email'].iloc[0])
                 password = st.text_input("Password", type="password")
-                phone_number = st.text_input("Phone Number", value=user_data['Phone Number'].iloc[0])
+                phone_number = st.text_input("Phone Number", value=user_data['Phone_Number'].iloc[0])
                 address = st.text_area("Address", value=user_data['Address'].iloc[0])
-                date_of_birth = st.date_input("Date of Birth", value=pd.to_datetime(user_data['Date of Birth'].iloc[0]))
+                date_of_birth = st.date_input("Date of Birth", value=pd.to_datetime(user_data['Date_of_Birth'].iloc[0]))
                 status = st.selectbox("Status", ['active', 'inactive', 'deleted'], index=['active', 'inactive', 'deleted'].index(user_data['Status'].iloc[0]))
                 
                 if st.form_submit_button("Update"):
