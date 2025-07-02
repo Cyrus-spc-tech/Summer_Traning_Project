@@ -1,14 +1,14 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from staticdatab import UserDatabase
+from userdb import UserDatabase
 
 st.set_page_config(page_title="Local DB", page_icon=":package:")
 db = UserDatabase()
 
 st.title("Local DB")
 
-menu = ["Describe Table", "Fetch All Users", "Insert User", "Delete User", "Update User", "Get User by ID", "Visualize Data", "Analytics"]
+menu = ["Describe Table", "Fetch All Users", "Insert User", "Delete User", "Update User", "Get User by ID"] #  "Visualize Data", "Analytics"
 choice = st.sidebar.selectbox("Menu", menu)
 st.sidebar.subheader("Table Description")
 st.sidebar.code('''
@@ -130,86 +130,137 @@ elif choice == "Get User by ID":
 
 
 
-elif choice == "Visualize Data":
-    st.subheader("Visualize Data")
-    data = db.fetch()
-    if data:
-        df = pd.DataFrame(data[0], columns=data[1])
-        st.dataframe(df)
-        
-        st.subheader("Data Visualization Options")
-        viz_type = st.selectbox("Select Visualization Type", ['Histogram', 'Bar Chart', 'Pie Chart'])
-        
-        x_axis = st.selectbox("Select X Axis", df.columns)
-        y_axis = st.selectbox("Select Y Axis", df.columns)
-        
-        if viz_type == 'Histogram':
-            st.subheader("Histogram")
-            st.bar_chart(df[x_axis].value_counts().sort_index())
-            
-        elif viz_type == 'Bar Chart':
-            st.subheader("Bar Chart")
-            st.bar_chart(df.groupby(x_axis)[y_axis].sum())
-            
-        elif viz_type == 'Pie Chart':
-            st.subheader("Pie Chart")
-            st.pie_chart(df[y_axis].value_counts())
-            
-    else:
-        st.info("No data to visualize.")
 
-elif choice == "Analytics":
-    st.subheader("Analytics")
-    data = db.fetch()
-    if data:
-        df = pd.DataFrame(data[0], columns=data[1])
-        st.dataframe(df)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# elif choice == "Visualize Data":
+#     st.subheader("Visualize Data")
+#     data = db.fetch()
+#     if data:
+#         df = pd.DataFrame(data[0], columns=data[1])
+#         st.dataframe(df)
         
-        st.subheader("Analytics Options")
-        analytics_type = st.selectbox("Select Analytics Type", ['Summary Statistics', 'Visual Analytics'])
+#         st.subheader("Data Visualization Options")
+#         viz_type = st.selectbox("Select Visualization Type", ['Histogram', 'Bar Chart', 'Pie Chart'])
         
-        if analytics_type == "Summary Statistics":
-            st.subheader("Summary Statistics")
-            st.write(df.describe())
+#         x_axis = st.selectbox("Select X Axis", df.columns)
+#         y_axis = st.selectbox("Select Y Axis", df.columns)
+        
+#         if viz_type == 'Histogram':
+#             st.subheader("Histogram")
+#             st.bar_chart(df[x_axis].value_counts().sort_index())
+            
+#         elif viz_type == 'Bar Chart':
+#             st.subheader("Bar Chart")
+#             st.bar_chart(df.groupby(x_axis)[y_axis].sum())
+            
+#         elif viz_type == 'Pie Chart':
+#             st.subheader("Pie Chart")
+#             st.pie_chart(df[y_axis].value_counts())
+            
+#     else:
+#         st.info("No data to visualize.")
+
+
+
+
+# elif choice == "Analytics":
+#     st.subheader("Analytics")
+#     data = db.fetch()
+#     if data:
+#         df = pd.DataFrame(data[0], columns=data[1])
+#         st.dataframe(df)
+        
+#         st.subheader("Analytics Options")
+#         analytics_type = st.selectbox("Select Analytics Type", ['Summary Statistics', 'Visual Analytics'])
+        
+#         if analytics_type == "Summary Statistics":
+#             st.subheader("Summary Statistics")
+#             st.write(df.describe())
             
 
             
-        elif analytics_type == "Visual Analytics":
-            st.subheader("Visual Analytics")
+#         elif analytics_type == "Visual Analytics":
+#             st.subheader("Visual Analytics")
             
-            # Distribution plots
-            numeric_cols = df.select_dtypes(include=['float64', 'int64']).columns
-            if len(numeric_cols) > 0:
-                st.subheader("Distribution Plots")
-                for col in numeric_cols:
-                    fig = px.histogram(df, x=col, title=f'Distribution of {col}')
-                    st.plotly_chart(fig)
+#             # Distribution plots
+#             numeric_cols = df.select_dtypes(include=['float64', 'int64']).columns
+#             if len(numeric_cols) > 0:
+#                 st.subheader("Distribution Plots")
+#                 for col in numeric_cols:
+#                     fig = px.histogram(df, x=col, title=f'Distribution of {col}')
+#                     st.plotly_chart(fig)
             
-            # Box plots
-            if len(numeric_cols) > 0:
-                st.subheader("Box Plots")
-                for col in numeric_cols:
-                    fig = px.box(df, y=col, title=f'Box Plot of {col}')
-                    st.plotly_chart(fig)
+#             # Box plots
+#             if len(numeric_cols) > 0:
+#                 st.subheader("Box Plots")
+#                 for col in numeric_cols:
+#                     fig = px.box(df, y=col, title=f'Box Plot of {col}')
+#                     st.plotly_chart(fig)
             
-            # Scatter plots
-            if len(numeric_cols) > 1:
-                st.subheader("Scatter Plots")
-                for i in range(len(numeric_cols)):
-                    for j in range(i+1, len(numeric_cols)):
-                        fig = px.scatter(df, x=numeric_cols[i], y=numeric_cols[j], 
-                                       title=f'Scatter Plot: {numeric_cols[i]} vs {numeric_cols[j]}')
-                        st.plotly_chart(fig)
+#             # Scatter plots
+#             if len(numeric_cols) > 1:
+#                 st.subheader("Scatter Plots")
+#                 for i in range(len(numeric_cols)):
+#                     for j in range(i+1, len(numeric_cols)):
+#                         fig = px.scatter(df, x=numeric_cols[i], y=numeric_cols[j], 
+#                                        title=f'Scatter Plot: {numeric_cols[i]} vs {numeric_cols[j]}')
+#                         st.plotly_chart(fig)
             
-            # Bar charts for categorical data
-            categorical_cols = df.select_dtypes(include=['object']).columns
-            if len(categorical_cols) > 0:
-                st.subheader("Categorical Data Distribution")
-                for col in categorical_cols:
-                    fig = px.bar(df[col].value_counts(), 
-                                title=f'Distribution of {col}',
-                                labels={'value': 'Count', 'index': col})
-                    st.plotly_chart(fig)
+#             # Bar charts for categorical data
+#             categorical_cols = df.select_dtypes(include=['object']).columns
+#             if len(categorical_cols) > 0:
+#                 st.subheader("Categorical Data Distribution")
+#                 for col in categorical_cols:
+#                     fig = px.bar(df[col].value_counts(), 
+#                                 title=f'Distribution of {col}',
+#                                 labels={'value': 'Count', 'index': col})
+#                     st.plotly_chart(fig)
             
-    else:
-        st.info("No data to analyze.")
+#     else:
+#         st.info("No data to analyze.")

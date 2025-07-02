@@ -1,5 +1,5 @@
 import sqlite3
-import streamlit as st
+
 
 class UserDatabase:
     def __init__(self, db_name="Users.db"):
@@ -9,7 +9,7 @@ class UserDatabase:
     def _create_table(self):
         con = sqlite3.connect(self.db_name)
         cur = con.cursor()
-        # Check if table exists
+    
         cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='user'")
         table_exists = cur.fetchone()
         
@@ -27,7 +27,7 @@ class UserDatabase:
                 status TEXT DEFAULT 'active'
             )""")
         else:
-            # Add new columns if they don't exist
+            
             cur.execute("PRAGMA table_info(user)")
             columns = [c[1] for c in cur.fetchall()]
             
@@ -47,6 +47,11 @@ class UserDatabase:
         con.commit()
         con.close()
 
+
+
+
+
+
     def insert(self, name, email, password, phone_number='', address='', date_of_birth=None):
         con = sqlite3.connect(self.db_name)
         cur = con.cursor()
@@ -56,6 +61,11 @@ class UserDatabase:
         """, (name, email, password, phone_number, address, date_of_birth))
         con.commit()
         con.close()
+
+
+
+
+
 
     def fetch(self):
         con = sqlite3.connect(self.db_name)
@@ -67,8 +77,12 @@ class UserDatabase:
         data = cur.fetchall()
         con.close()
         
-        # Return both data and column names
         return data, columns
+
+
+
+
+
 
     def describe(self):
         con = sqlite3.connect(self.db_name)
@@ -78,12 +92,24 @@ class UserDatabase:
         con.close()
         return data
 
+
+
+
+
+
+
     def delete(self, id):
         con = sqlite3.connect(self.db_name)
         cur = con.cursor()
         cur.execute("DELETE FROM user WHERE id=?", (id,))
         con.commit()
         con.close()
+
+
+
+
+
+
 
     def update(self, id, name, email, password, phone_number='', address='', date_of_birth=None, status='active'):
         con = sqlite3.connect(self.db_name)
@@ -95,6 +121,11 @@ class UserDatabase:
         """, (name, email, password, phone_number, address, date_of_birth, status, id))
         con.commit()
         con.close()
+
+
+
+
+
 
     def get_user_by_id(self, id):
         con = sqlite3.connect(self.db_name)
