@@ -47,26 +47,6 @@ if uploaded_file is not None:
 
             st.dataframe(filtered_data)
 
-            # Plotting
-            st.subheader("📊 Plotting Data")
-
-            xaxis = st.selectbox("Select x-axis", df.columns)
-            yaxis = st.selectbox("Select y-axis", df.columns)
-
-            plot = st.selectbox("Select plot type", ["Line Plot", "Bar Plot", "Scatter Plot"])
-
-            if xaxis == yaxis:
-                st.warning("❗X-axis and Y-axis cannot be the same.")
-            elif st.button("Generate Plot"):
-                if plot == "Line Plot":
-                    st.line_chart(filtered_data.set_index(xaxis)[yaxis])
-                elif plot == "Bar Plot":
-                    st.bar_chart(filtered_data.set_index(xaxis)[yaxis])
-                elif plot == "Scatter Plot":
-                    st.scatter_chart(filtered_data.set_index(xaxis)[yaxis])
-                else:
-                    st.error("❌ Invalid plot type selected.")
-
     except Exception as e:
         st.error(f"❌ Error loading file: {e}")
 
@@ -84,6 +64,8 @@ if uploaded_file is not None:
                 st.write(df.describe())
                 
                 
+
+
             elif analytics_type == "Visual Analytics":
                 st.subheader("Visual Analytics")
                 numeric_cols = df.select_dtypes(include=['float64', 'int64']).columns
@@ -92,6 +74,8 @@ if uploaded_file is not None:
                     for col in numeric_cols:
                         fig = px.histogram(df, x=col, title=f'Distribution of {col}')
                         st.plotly_chart(fig, use_container_width=True)
+
+
                 # Line Plot
                 st.subheader("Line Plot")
                 line_x = st.selectbox("Select x-axis", df.columns, key='line_x')
@@ -100,7 +84,11 @@ if uploaded_file is not None:
                     st.warning("❗X-axis and Y-axis cannot be the same.")
                 elif st.button("Generate Line Plot"):
                     st.line_chart(df.set_index(line_x)[line_y])
-                
+
+
+
+
+
                 # Bar Plot
                 st.subheader("Bar Plot")
                 bar_x = st.selectbox("Select x-axis", df.columns, key='bar_x')
@@ -110,6 +98,9 @@ if uploaded_file is not None:
                 elif st.button("Generate Bar Plot"):
                     st.bar_chart(df.set_index(bar_x)[bar_y])
                 
+
+
+
                 # Box Plots
                 st.subheader("Box Plots")
                 box_x = st.selectbox("Select x-axis for Box Plot", df.columns, key='box_x')
@@ -118,6 +109,12 @@ if uploaded_file is not None:
                     st.plotly_chart(fig, use_container_width=True)
                 else:
                     st.warning(f"❗ '{box_x}' is not a numeric column.")
+
+
+
+
+
+
                 
                 # Scatter Plots
                 st.subheader("Scatter Plots")
@@ -136,12 +133,15 @@ if uploaded_file is not None:
                 else:
                     st.warning(f"❗ '{scatter_x}' and '{scatter_y}' must both be numeric columns.")
                 
+
+
+
+
                 # Pie Charts
                 st.subheader("Pie Charts")
                 pie_col = st.selectbox("Select column for Pie Chart", df.columns, key='pie_col')
                 if pie_col in df.select_dtypes(include=['object']).columns:
                     try:
-                        # Only show pie charts for columns with reasonable number of unique values
                         if 1 < df[pie_col].nunique() <= 10:
                             fig = px.pie(
                                 df, 
@@ -150,6 +150,10 @@ if uploaded_file is not None:
                                 hole=0.3
                             )
                             st.plotly_chart(fig, use_container_width=True)
+
+
+
+
                     except Exception as e:
                         st.warning(f"Could not create pie chart for {pie_col}: {str(e)}")
 
