@@ -4,7 +4,10 @@ MapConfig is a simple, lightweight Python library for creating beautiful interac
 
 It uses OpenStreetMap's Nominatim API to fetch coordinates and Folium to render maps.
 
-
+## Usage 
+```python
+pip install mapconfig
+```
 ## ⭐ Features
 
 - 🔥 Add simple markers with just a place name
