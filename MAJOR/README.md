@@ -22,6 +22,12 @@ pip install mapconfig
 
 ---
 
+## Installation 
+To install MapConfig, you can use pip:
+```
+pip install mapconfig
+```
+
 ## 🚀 Available Function 
 
 ```python
